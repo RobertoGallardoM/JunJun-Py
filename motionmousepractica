@@ -1,0 +1,41 @@
+import tkinter as tk
+from tkinter import ttk
+
+
+class Example:
+    def __init__(self, parent):
+        style = ttk.Style()
+        style.configure('Fuera.TFrame', background='Yellow')
+        fuera = ttk.Frame(parent, style='Fuera.TFrame', height= 100, width=100)
+        Dentro(fuera)
+        fuera.bind('<Button-1>', self.fuera_click)
+        fuera.pack(expand=1, fill=tk.BOTH)
+
+    def fuera_click(self, event):
+        print(f'Click en zona exterior\n{"-" * 22}')
+
+class Dentro:
+    def __init__(self, master):
+        style = ttk.Style()
+        style.configure('Dentro.TFrame', background='Green')
+        dentro = ttk.Frame(
+            master, style='Dentro.TFrame', height= 100, width=100
+            )
+        dentro.pack(expand=True)
+
+        bindtags = list(dentro.bindtags())
+        bindtags.insert(1, master)
+        #                  ^^^^^^---> Referencia al frame padre "fuera"
+        dentro.bindtags(tuple(bindtags))
+        dentro.bind('<Button-1>', self.dentro_click)
+
+    def dentro_click(self, event):
+        print("Click en zona interior")
+
+
+if __name__ == '__main__':    
+    root = tk.Tk()
+    root.geometry("375x250")
+    Example(root)
+    root.mainloop()
+
