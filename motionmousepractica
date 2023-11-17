@@ -26,7 +26,7 @@ class Aplicacion(Frame):
         self.frame_top.grid_propagate(0)
         self.frame_top.grid(column=0, row=0, sticky='nsew')
 
-    #Frame del Cotenido
+        #Frame del Cotenido
         self.frame_principal=Frame(self.ventana, bg='black')
         self.frame_principal.grid(column=0, row=1, sticky='nsew')
 
@@ -48,7 +48,6 @@ class Aplicacion(Frame):
         self.grip.place(relx=1.0, rely=1.0, anchor="se")
         self.grip.bind("<B1-Motion>", self.redimencionar)
         ttk.Style().configure("tSizegrip", background='black')
-
                                   
 
 
@@ -57,7 +56,42 @@ class Aplicacion(Frame):
         self.y1=self.ventana.winfo_pointerxy()
         self.x0=self.ventana.winfo_rootx()
         self.y0=self.ventana.winfo_rooty()
-        
+        ptint(self.x0, self.y0, self.x1, self.y1)
+        try:
+            self.ventana.geometry("%$x%s" %((self.x1 -self,x0)), )
+        except:
+            pass
+    def salir(self):
+        self.ventana.destroy()
+        self.ventana.quit()
+    
+    def start(self, event):
+        self.x = event.x
+        self.y = event.y
+    def mover(self, event):
+        deltax = event.x - self.x
+        deltay = event.y - self.y
+        if self.ventana.winfo_y()>0:
+            self.ventana.geometry("+%s+%s" % (self.ventana.winfo_x() + deltax, self.ventana.winfo_y()+deltay))
+            self.ventana.update()
+        elif self.ventana.winfo_y()<=1:
+            self.ventana.geometry("+%s+%s" % (self.ventana.winfo_x() + deltax, self.ventana.winfo_y() + deltay))
+            self.ventana.update()
+            self.pantalla_completa()
+            self.cambiar_tamaño.config(image = self.imagenecog)
+            self.click = False
+            if self.ventana.winfo_y()<=50 and self.ventana.winfo_y()>0
+                self.click = True
+                self.cambiar_tamaño.config(image = self.image_maximizar)
+                self.ventana.geometry("%sx%s+%s+%s" % ((self.x1 - self.x0), (self.y1 - self.y0), self.x0, self.y0))
+                
+                self.ventana.update()
+        def pantalla_completa(self):
+
+                            
+
+
+
         
 
 if _name_=="_main_":
