@@ -2,7 +2,7 @@
 
 
 
-from tkinter import *
+from tkinter import *   
 from tkinter import Frame, Toplevel, ttk
 
 class Aplicacion(Frame):
@@ -100,6 +100,143 @@ if _name_=="_main_":
     root.call('wm', 'iconphoto', root._w, PhotoImage(file='logo.png'))
     root.attributes('alpha' , 0.0)
     root.config(bg='DarkOrchid1')
+
+
+
+
+
+from tkinter import *
+from tkinter import Frame, Toplevel, ttk
+from tkinter 
+class Aplicacion(Frame):
+    def _ini_(self, master, *args):
+        super().__init_(master, *args)
+        self.x = 0
+        self.y=0
+        self.x0=50
+        self.y0=50
+        self.x1=100
+        self.y1=100
+        self.click= True
+
+        self.ventana= Toplevel(self.master)
+        self.ventana.overrideredirect(1)
+        self.ventana.minsize(width=300, height=200)
+        self.ventana.geometry('800x500+300+90')
+
+        #Frame Barra de Titulo
+        self.frame_top = Frame(self.ventana, bg='DarkOrchid1', height=60) #width=50,
+        self.frame_top.grid_propagate(0)
+        self.frame_top.grid(column=0, row=0, sticky='nsew')
+
+        #Frame del Cotenido
+        self.frame_principal=Frame(self.ventana, bg='black')
+        self.frame_principal.grid(column=0, row=1, sticky='nsew')
+
+        self.ventana.columnconfigure(0, weight=1)
+        self.ventana.rowconfigure(1, weight=1)
+
+        self.frame_principal.columnconfigure(0, weight=1)
+        self.frame_principal.columnconfigure(1,weight=1)
+        self.frame_principal.columnconfigure(2, weight=1)
+        self.frame_principal.rowconfigure(0, weight=1)
+        self.frame_principal.rowconfigure(1,weight=1)
+
+        self.frame_top.bind("<ButtonPress-1>", self.start)
+        self.frame_top.bind("<B1-Motion>", self.mover)
+        self.master.brid("Map", self.on_deiconify)
+        self.master.brin("<Unmap>", self.on_iconify)
+
+        self.grip = ttk.Sizegrip(self.frame_principal, style="TSizegrip")
+        self.grip.place(relx=1.0, rely=1.0, anchor="se")
+        self.grip.bind("<B1-Motion>", self.redimencionar)
+        ttk.Style().configure("tSizegrip", background='black')
+                                  
+
+
+    def redimencionar(self, event):
+        self.x1=self.ventana.winfo_pointerx()
+        self.y1=self.ventana.winfo_pointerxy()
+        self.x0=self.ventana.winfo_rootx()
+        self.y0=self.ventana.winfo_rooty()
+        ptint(self.x0, self.y0, self.x1, self.y1)
+        try:
+            self.ventana.geometry("%$x%s" %((self.x1 -self,x0)), )
+        except:
+            pass
+    def salir(self):
+        self.ventana.destroy()
+        self.ventana.quit()
+    
+    def start(self, event):
+        self.x = event.x
+        self.y = event.y
+    
+    
+    def mover(self, event):
+        deltax = event.x - self.x
+        deltay = event.y - self.y
+        if self.ventana.winfo_y()>0:
+            self.ventana.geometry("+%s+%s" % (self.ventana.winfo_x() + deltax, self.ventana.winfo_y()+deltay))
+            self.ventana.update()
+        elif self.ventana.winfo_y()<=1:
+            self.ventana.geometry("+%s+%s" % (self.ventana.winfo_x() + deltax, self.ventana.winfo_y() + deltay))
+            self.ventana.update()
+            self.pantalla_completa()
+            self.cambiar_tamaño.config(image = self.imagenecog)
+            self.click = False
+            if self.ventana.winfo_y()<=50 and self.ventana.winfo_y()>0
+                self.click = True
+                self.cambiar_tamaño.config(image = self.image_maximizar)
+                self.ventana.geometry("%sx%s+%s+%s" % ((self.x1 - self.x0), (self.y1 - self.y0), self.x0, self.y0))
+                self.ventana.geometry("+%s+%s" % (self.ventana.winfo_x()+ deltax, self.ventana.winfo_y()+ delay))
+
+                self.ventana.update()
+    def pantalla_completa(self):
+        self.ventana.geometry("{0}x{1}+0+0.format(self.ventana.winfo_screenwidth(),
+            self.ventana.winfo_screenheight()-30)")
+    def cambiar_dimencion(self, event)
+     self.ventana.deiconify()
+     self.master.iconify()
+
+    def on_deiconify(self,event):
+        self.ventana.deiconify()
+        self.master.lower()
+
+    def on_iconify(self,event):
+        self.ventana.withdraw()
+        self.master.iconify()
+    def windgets(self):
+        self.imagen_cerrar = PhotoImage(file='imagenes/cerrar.png')
+        self.imagen_maximizar = PhotoImage(file='imagenes/maximizar.png')
+        self.imagen_minimizar = PhotoImage(file='imagenes/minimizar.png')
+        self.imagen_encogimiento = PhotoImage(file='imagenes/encogimiento.png')
+
+        self.cerrar = Button(self.frame_top, image= self)
+        
+
+    Button(frame_dos, text='buton 2', bg = 'magenta2')
+                            
+label(frame_tres, text='Python ', bg='tomato', fb='black', 
+      font=('Magnum', 20, 'bold')).pack(pady=5)
+label(frame_cuatro, text='Python ', bg='tomato', fb='black', 
+      font=('Magnum', 20, 'bold')).pack(pady=5)
+label(frame_cinco, text='Python ', bg='tomato', fb='black', 
+      font=('Magnum', 20, 'bold')).pack(pady=5)
+        
+
+if _name_=="_main_":
+    root=Tk()
+    root.title("Aplicacion Maderna")
+    root.call('wm', 'iconphoto', root._w, PhotoImage(file='logo.png'))
+    root.attributes('alpha' , 0.0)
+    root.config(bg='DarkOrchid1')
+    app=Aplicacion(root)
+    app.mainloop()
+
+
+
+
     app=Aplicacion(root)
     app.mainloop()
 
